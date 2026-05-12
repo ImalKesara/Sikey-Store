@@ -1,14 +1,11 @@
-import { PrismaClient } from '@prisma/client';
 import { Lucia } from 'lucia';
 import { dev } from '$app/environment';
 import { PrismaAdapter } from '@lucia-auth/adapter-prisma';
-
-// after inilize this we can control db / fetch data and more ...
-export const db = new PrismaClient();
+import { prisma } from '$lib/prisma';
 
 // initialize lucia-auth
 //const adapter = new BetterSQLite3Adapter(db);  your adapter
-const adapter = new PrismaAdapter(db.session, db.user);
+const adapter = new PrismaAdapter(prisma.session, prisma.user);
 
 export const lucia = new Lucia(adapter, {
 	sessionCookie: {

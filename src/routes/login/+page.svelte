@@ -11,7 +11,7 @@
 	const form = superForm(data.form, {
 		validators: zodClient(loginFormSchema)
 	});
-	const { form: formData, delayed, enhance } = form;
+	const { form: formData, delayed,  } = form;
 </script>
 
 <form class="grid h-screen place-items-center" method="POST">

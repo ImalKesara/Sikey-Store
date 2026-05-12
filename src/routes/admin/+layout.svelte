@@ -2,10 +2,12 @@
 	import { page } from '$app/stores';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import { cn } from '$lib/utils';
+	import  {Toaster} from 'svelte-5-french-toast'
 	let pathname = $derived($page.url.pathname);
 	let { children } = $props();
 </script>
 
+<Toaster />
 <Navbar>
 	{@render navLink({ href: '/admin', text: 'Dashboard' })}
 	{@render navLink({ href: '/admin/products', text: 'Products' })}

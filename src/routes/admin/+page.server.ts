@@ -1,7 +1,7 @@
-import { db } from '../../hooks.server';
+import { prisma } from '$lib/prisma';
 
 async function getSalesData() {
-	const data = await db.order.aggregate({
+	const data = await prisma.order.aggregate({
 		// means priceIncents tiyena ewaye withrk ekathuwa
 		_sum: { priceInCents: true },
 		_count: true
@@ -14,8 +14,8 @@ async function getSalesData() {
 
 async function getUserData() {
 	const [userCount, orderData] = await Promise.all([
-		await db.user.count(),
-		await db.order.aggregate({
+		await prisma.user.count(),
+		await prisma.order.aggregate({
 			_sum: { priceInCents: true }
 		})
 	]);
@@ -28,8 +28,8 @@ async function getUserData() {
 
 async function getProductData() {
 	const [activeCount, inactiveCount] = await Promise.all([
-		db.product.count({ where: { isAvailableForPurchase: true } }),
-		db.product.count({ where: { isAvailableForPurchase: false } })
+		prisma.product.count({ where: { isAvailableForPurchase: true } }),
+		prisma.product.count({ where: { isAvailableForPurchase: false } })
 	]);
 
 	return {

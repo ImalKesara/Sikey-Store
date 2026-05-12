@@ -1,14 +1,12 @@
 import { superValidate, fail } from 'sveltekit-superforms';
-import { db } from '../../../../../hooks.server';
 import { addFormSchema } from '$lib/formSchema';
 import { zod } from 'sveltekit-superforms/adapters';
 import fs from 'fs/promises';
 import { redirect } from '@sveltejs/kit';
-import { goto } from '$app/navigation';
 
 //load data (according to specific slug/id(product id))
 export const load = async ({ params: { slug } }) => {
-	const product = await db.product.findUnique({
+	const product = await prisma.product.findUnique({
 		where: { id: slug }
 	});
 	return {
@@ -27,7 +25,7 @@ export const actions = {
 		if (!form.valid) {
 			return fail(400, { form });
 		}
-		const product = await db.product.findUnique({
+		const product = await prisma.product.findUnique({
 			where: { id: slug }
 		});
 		if (!product) return;
@@ -49,7 +47,7 @@ export const actions = {
 		}
 
 		try {
-			await db.product.update({
+			await prisma.product.update({
 				where: { id: slug },
 				data: {
 					name: form.data.name,

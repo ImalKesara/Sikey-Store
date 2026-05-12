@@ -1,9 +1,9 @@
-import { db } from '../../../hooks.server';
+import { prisma } from '$lib/prisma.js';
 import fs from 'fs/promises';
 
 export const load = async () => {
 	return {
-		products: await db.product.findMany({
+		products: await prisma.product.findMany({
 			select: {
 				id: true,
 				name: true,
@@ -27,7 +27,7 @@ export const actions = {
 		//  name = "id" in form
 		const id = formData.get('id') as string;
 		const isAvailableForPurchase = formData.has('isAvailableForPurchase');
-		await db.product.update({
+		await prisma.product.update({
 			where: { id },
 			data: {
 				isAvailableForPurchase
@@ -37,13 +37,13 @@ export const actions = {
 	deleteProduct: async ({ request }) => {
 		const formData = await request.formData();
 		const id = formData.get('id') as string;
-		const product = await db.product.findUnique({
+		const product = await prisma.product.findUnique({
 			where: { id: id },
 			select: { _count: { select: { order: true } } }
 		});
 
 		if (product && product._count.order > 0) return;
-		const deletedProduct = await db.product.delete({
+		const deletedProduct = await prisma.product.delete({
 			where: { id }
 		});
 

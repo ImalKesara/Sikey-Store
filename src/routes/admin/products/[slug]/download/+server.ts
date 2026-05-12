@@ -1,8 +1,7 @@
-import { db } from '../../../../../hooks.server.js';
 import fs from 'fs/promises';
 
 export const GET = async ({ params: { slug } }) => {
-	const product = await db.product.findUnique({
+	const product = await prisma.product.findUnique({
 		where: {
 			id: slug
 		},

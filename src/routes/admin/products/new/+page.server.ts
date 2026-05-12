@@ -2,7 +2,6 @@ import { addFormSchema } from '$lib/formSchema';
 import { superValidate, fail } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import fs from 'fs/promises';
-import { db } from '../../../../hooks.server.js';
 import { redirect } from '@sveltejs/kit';
 
 export const load = async () => {
@@ -31,8 +30,8 @@ export const actions = {
 		await fs.writeFile(`static${imagePath}`, Buffer.from(await form.data.image.arrayBuffer()));
 
 		try {
-			await db.product.create({
-				data: { 
+			await prisma.product.create({
+				data: {
 					name: form.data.name,
 					description: form.data.description,
 					priceInCents: form.data.priceInCents,

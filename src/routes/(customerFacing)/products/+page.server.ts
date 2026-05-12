@@ -1,7 +1,7 @@
-import { db } from '../../../hooks.server';
+import { prisma } from '$lib/prisma';
 
 async function getProducts() {
-	return await db.product.findMany({
+	return await prisma.product.findMany({
 		where: { isAvailableForPurchase: true },
 		orderBy: { name: 'asc' }
 	});

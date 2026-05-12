@@ -1,10 +1,10 @@
 import { loginFormSchema } from '$lib/formSchema';
-import { generateId } from 'lucia';
 import { fail, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { Argon2id } from 'oslo/password';
-import { db, lucia } from '../../hooks.server.js';
+import { lucia } from '../../hooks.server.js';
 import { redirect } from '@sveltejs/kit';
+import { prisma } from '$lib/prisma.js';
 
 export const load = async () => {
 	return {
@@ -41,7 +41,7 @@ export const actions = {
 		// })
 
 		// login user ---------------- exist
-		const existingUser = await db.user.findUnique({
+		const existingUser = await prisma.user.findUnique({
 			where: { username: form.data.username.toLowerCase() }
 		});
 		if (!existingUser) {

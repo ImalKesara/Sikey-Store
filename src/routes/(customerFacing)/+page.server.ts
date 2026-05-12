@@ -1,7 +1,7 @@
-import { db } from '../../hooks.server';
+import { prisma } from '$lib/prisma';
 
 function getMostPopluarProduct() {
-	return db.product.findMany({
+	return prisma.product.findMany({
 		where: { isAvailableForPurchase: true },
 		take: 5,
 		orderBy: { order: { _count: 'desc' } }
@@ -9,7 +9,7 @@ function getMostPopluarProduct() {
 }
 
 function getNewstProduct() {
-	return db.product.findMany({
+	return prisma.product.findMany({
 		where: { isAvailableForPurchase: true },
 		take: 5,
 		orderBy: { createdAt: 'desc' }
