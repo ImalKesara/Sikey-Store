@@ -13,9 +13,9 @@
 	<title>Sikey Store</title>
 </svelte:head>
 
-<main class="space-y-12">
+<main class="space-y-10">
 	<!-- Hero -->
-	<section class="container mx-auto grid items-center gap-8 px-4 py-12 lg:grid-cols-2">
+	<section class="container mx-auto grid items-center gap-8 px-4 py-10 lg:grid-cols-2">
 		<div class="space-y-6">
 			<h1 class="text-4xl leading-tight font-extrabold capitalize sm:text-5xl">
 				Premium sneakers, built for everyday movement

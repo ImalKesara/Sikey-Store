@@ -17,7 +17,7 @@
 		</div>
 	</Navbar>
 
-	<main class="container mx-auto my-10 max-w-6xl">
+	<main class="container mx-auto max-w-6xl sm:my-10">
 		{@render children()}
 	</main>
 

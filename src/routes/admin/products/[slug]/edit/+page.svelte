@@ -11,6 +11,7 @@
 
 	import { formatCurrency } from '$lib/utils.js';
 	import { page } from '$app/stores';
+	import { enhance } from '$app/forms';
 	const { data } = $props();
 </script>
 
