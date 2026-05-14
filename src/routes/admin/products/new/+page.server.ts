@@ -12,9 +12,8 @@ export const actions = {
 		const priceInCents = formData.get('priceInCents') as string;
 		const file = formData.get('imageupload') as File;
 
-		const uploadedImg = await uploadImage(file);
-
 		try {
+			const uploadedImg = await uploadImage(file);
 			await prisma.product.create({
 				data: {
 					name: name,

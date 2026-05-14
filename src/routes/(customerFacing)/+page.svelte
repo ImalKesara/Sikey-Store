@@ -17,16 +17,16 @@
 	<!-- Hero -->
 	<section class="container mx-auto grid items-center gap-8 px-4 py-12 lg:grid-cols-2">
 		<div class="space-y-6">
-			<h1 class="text-4xl leading-tight font-extrabold sm:text-5xl">
-				Handmade donuts, baked fresh daily
+			<h1 class="text-4xl leading-tight font-extrabold capitalize sm:text-5xl">
+				Premium sneakers, built for everyday movement
 			</h1>
-			<p class="text-muted-foreground max-w-xl">
-				Freshly made, small-batch donuts with premium ingredients. Try our most popular flavors or
-				discover what’s new this week.
+			<p class="text-muted-foreground max-w-xl capitalize">
+				Discover lightweight, comfortable, and stylish shoes designed for all-day wear. From casual
+				outings to active lifestyles, find the perfect pair that fits your step.
 			</p>
 
 			<div class="flex flex-wrap gap-3">
-				<Button href="/products" size="lg">Shop all donuts</Button>
+				<Button href="/products" size="lg">Shop all shoes</Button>
 				{#if featured}
 					<Button variant="outline" href={`/products/${featured.id}/purchase`} size="lg">
 						Buy featured

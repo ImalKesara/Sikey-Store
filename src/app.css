@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import '@fontsource-variable/jetbrains-mono/wght.css';
 @import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
@@ -110,5 +111,9 @@
 
 	body {
 		@apply bg-background text-foreground;
+	}
+
+	h1 {
+		font-family: 'JetBrains Mono Variable', monospace;
 	}
 }

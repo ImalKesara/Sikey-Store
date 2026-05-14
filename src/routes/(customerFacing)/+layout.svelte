@@ -7,18 +7,26 @@
 	let { children } = $props();
 </script>
 
-<Navbar>
-	{@render navLink({ href: '/', text: 'Home' })}
-	{@render navLink({ href: '/products', text: 'Products' })}
-</Navbar>
+<div class="bg-background flex min-h-screen flex-col font-sans antialiased">
+	<Navbar>
+		<h1 class="text-2xl font-medium uppercase">Sikey</h1>
 
-<div class="container mx-auto mt-10 max-w-6xl">
-	{@render children()}
+		<div>
+			{@render navLink({ href: '/', text: 'Home' })}
+			{@render navLink({ href: '/products', text: 'Products' })}
+		</div>
+	</Navbar>
+
+	<main class="container mx-auto my-10 max-w-6xl">
+		{@render children()}
+	</main>
+
+	<Footer>
+		{@render footer({
+			text: `&copy; ${new Date().getFullYear()} Sikey Store · All rights reserved`
+		})}
+	</Footer>
 </div>
-
-<Footer>
-	{@render footer({ text: 'Built with Svelte' })}
-</Footer>
 
 {#snippet navLink({ href, text }: { href: string; text: string })}
 	<a
@@ -31,5 +39,5 @@
 {/snippet}
 
 {#snippet footer({ text }: { text: string })}
-	<p class="p-5">{text}</p>
+	<p class="p-5">{@html text}</p>
 {/snippet}

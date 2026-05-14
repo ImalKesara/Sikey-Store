@@ -52,6 +52,7 @@
 		"vite": "^8.0.12"
 	},
 	"dependencies": {
+		"@fontsource-variable/jetbrains-mono": "^5.2.8",
 		"@libsql/client": "^0.17.3",
 		"@prisma/adapter-better-sqlite3": "^7.8.0",
 		"@prisma/adapter-libsql": "^7.8.0",

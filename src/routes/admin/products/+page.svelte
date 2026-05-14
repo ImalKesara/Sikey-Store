@@ -37,10 +37,10 @@
 				<Table.Cell>
 					{#if product.isAvailableForPurchase}
 						<span class="sr-only">Available</span>
-						<CircleCheckBig class="text-sky-300" />
+						<CircleCheckBig class="text-green-500" />
 					{:else}
 						<span class="sr-only">Unavailable</span>
-						<CircleX class="text-gray-300" />
+						<CircleX class="text-red-500" />
 					{/if}
 				</Table.Cell>
 				<Table.Cell>{product.name}</Table.Cell>
@@ -81,7 +81,7 @@
 							</form>
 							<!-- Delete product -->
 							<form action="?/deleteProduct" use:enhance method="POST">
-								<button class="w-full text-destructive" disabled={product._count.order > 0}>
+								<button class="text-destructive w-full" disabled={product._count.order > 0}>
 									<DropdownMenu.Item type="submit" disabled={product._count.order > 0}
 										>Delete</DropdownMenu.Item
 									>

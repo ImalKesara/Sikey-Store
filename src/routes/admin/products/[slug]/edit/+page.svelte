@@ -12,15 +12,6 @@
 	import { formatCurrency } from '$lib/utils.js';
 	import { page } from '$app/stores';
 	const { data } = $props();
-	const form = superForm(data.form, {
-		validators: zodClient(addFormSchema.partial({file:true,image:true}))
-	});
-
-	let { form: formData, delayed, enhance } = form;
-	// 								name = "file"
-	const file = fileProxy(formData, 'file');
-	// 								name = "image"
-	const image = fileProxy(formData, 'image');
 </script>
 
 <PageHeader>Edit Product</PageHeader>
@@ -51,7 +42,7 @@
 		<Form.FieldErrors />
 	</Form.Field>
 
-	<div class="text-sm text-muted-foreground">
+	<div class="text-muted-foreground text-sm">
 		{`Price in ${formatCurrency($formData.priceInCents / 100)}`}
 	</div>
 
@@ -79,14 +70,14 @@
 			file:font-semibold file:text-black
 			hover:file:bg-violet-100"
 			/>
-			<div class="text-sm text-muted-foreground">{data.product.filePath}</div>
+			<div class="text-muted-foreground text-sm">{data.product.filePath}</div>
 		</Form.Control>
 		<Form.FieldErrors />
 	</Form.Field>
 
 	<!-- Image -->
-	<Form.Field {form} name="image" >
-		<Form.Control let:attrs >
+	<Form.Field {form} name="image">
+		<Form.Control let:attrs>
 			<Form.Label>Product Image</Form.Label>
 			<!-- accept any image type -->
 			<input
@@ -101,7 +92,7 @@
 			file:font-semibold file:text-black
 			hover:file:bg-violet-100"
 			/>
-			<div class="text-sm text-muted-foreground">{data.product?.imagePath}</div>
+			<div class="text-muted-foreground text-sm">{data.product?.imagePath}</div>
 			<img src={data.product.imagePath} alt="prodcut" class="h-[300px] w-[500px] object-cover" />
 		</Form.Control>
 		<Form.FieldErrors />

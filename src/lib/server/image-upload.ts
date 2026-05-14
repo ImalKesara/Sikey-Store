@@ -22,8 +22,11 @@ export async function uploadImage(file: File): Promise<UploadApiResponse> {
 		const uploadStream = cloudinary.uploader.upload_stream(
 			{ folder: 'sweets' },
 			(error, result) => {
-				if (error) console.log(error);
-				if (!result) return reject(new Error('No result returned from cloudinary' + error));
+				if (error) {
+					console.error('Cloudinary Upload Error Details:', error);
+					return reject(error);
+				}
+				if (!result) return reject(new Error('No result returned from cloudinary'));
 				resolve(result);
 			}
 		);
