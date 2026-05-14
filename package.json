@@ -6,6 +6,7 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
+		"postinstall": "prisma generate",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -37,7 +38,6 @@
 		"prettier": "^3.8.3",
 		"prettier-plugin-svelte": "^3.5.2",
 		"prettier-plugin-tailwindcss": "^0.8.0",
-		"prisma": "^7.8.0",
 		"stripe": "^22.1.1",
 		"svelte": "^5.55.5",
 		"svelte-check": "^4.4.8",
@@ -65,6 +65,7 @@
 		"formsnap": "^2.0.1",
 		"lucide-svelte": "^1.0.1",
 		"npm-check-updates": "^22.2.0",
+		"prisma": "^7.8.0",
 		"svelte-5-french-toast": "^2.0.6",
 		"svelte-sonner": "^1.1.1",
 		"tailwind-merge": "^3.6.0",
