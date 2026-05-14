@@ -7,8 +7,9 @@
 	type ProductsGridSection = {
 		title: string;
 		products: Product[];
+		class?: string;
 	};
-	let { title, products }: ProductsGridSection = $props();
+	let { title, products, class: className }: ProductsGridSection = $props();
 </script>
 
 <div class="space-y-4">
@@ -20,7 +21,7 @@
 		</Button>
 	</div>
 
-	<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+	<div class="grid grid-cols-1 gap-4 md:grid-cols-2 {className}">
 		{#each products as product (product.id)}
 			<ProductCards {...product} />
 		{/each}

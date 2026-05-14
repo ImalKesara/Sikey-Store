@@ -25,7 +25,7 @@
 		<Card.Title>{name}</Card.Title>
 		<Card.Description>{formatCurrency(priceInCents / 100)}</Card.Description>
 	</Card.Header>
-	<Card.Content class="flex-grow">
+	<Card.Content class="grow">
 		<p class="text-muted-foreground line-clamp-4 text-sm">{description}</p>
 	</Card.Content>
 	<Card.Footer>

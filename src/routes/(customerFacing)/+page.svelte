@@ -1,12 +1,16 @@
 <script lang="ts">
 	import ProductsGridSection from '$lib/components/ProductsGridSection.svelte';
 	import { Button } from '$lib/components/ui/button';
+	import * as Carousel from '$lib/components/ui/carousel/index.js';
 	import { formatCurrency } from '$lib/utils';
+	import Autoplay from 'embla-carousel-autoplay';
+
 	let { data } = $props();
 
 	const most = data?.mostPopularProduct ?? [];
 	const newset = data?.newsetProduct ?? [];
 	const featured = most[0] ?? newset[0] ?? null;
+	const plugin = Autoplay({ delay: 3500, stopOnInteraction: true });
 </script>
 
 <svelte:head>
@@ -40,21 +44,34 @@
 				<article
 					class="bg-background overflow-hidden rounded-xl shadow-md transition-shadow hover:shadow-lg"
 				>
-					<img
-						src={featured.imagePath ?? `https://picsum.photos/800/600?random=1`}
-						alt={featured.name}
-						class="h-72 w-full object-cover"
-						loading="lazy"
-					/>
-					<div class="p-4">
-						<h3 class="text-xl font-semibold">{featured.name}</h3>
-						<p class="text-muted-foreground mt-1 line-clamp-3 text-sm">{featured.description}</p>
+					<Carousel.Root plugins={[plugin]}>
+						<Carousel.Content>
+							{#each newset as product}
+								<Carousel.Item>
+									<img
+										src={product.imagePath ?? `https://picsum.photos/800/600?random=1`}
+										alt={product.name}
+										class="h-72 w-full object-cover"
+										loading="lazy"
+									/>
 
-						<div class="mt-4 flex items-center justify-between">
-							<div class="text-lg font-bold">{formatCurrency(featured.priceInCents / 100)}</div>
-							<Button href={`/products/${featured.id}/purchase`}>Purchase</Button>
-						</div>
-					</div>
+									<div class="p-4">
+										<h3 class="text-xl font-semibold">{product.name}</h3>
+										<p class="text-muted-foreground mt-1 line-clamp-3 text-sm">
+											{product.description}
+										</p>
+
+										<div class="mt-4 flex items-center justify-between">
+											<div class="text-lg font-bold">
+												{formatCurrency(product.priceInCents / 100)}
+											</div>
+											<Button href={`/products/${product.id}/purchase`}>Purchase</Button>
+										</div>
+									</div>
+								</Carousel.Item>
+							{/each}
+						</Carousel.Content>
+					</Carousel.Root>
 				</article>
 			{:else}
 				<div class="flex h-72 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800">
@@ -66,11 +83,11 @@
 
 	<!-- Most popular -->
 	<section class="container mx-auto px-4">
-		<ProductsGridSection title="Most Popular" products={most} />
+		<ProductsGridSection title="Most Popular" class="lg:grid-cols-3" products={most} />
 	</section>
 
 	<!-- New arrivals -->
 	<section class="container mx-auto px-4">
-		<ProductsGridSection title="New Arrivals" products={newset} />
+		<ProductsGridSection title="New Arrivals" class="lg:grid-cols-4" products={newset} />
 	</section>
 </main>

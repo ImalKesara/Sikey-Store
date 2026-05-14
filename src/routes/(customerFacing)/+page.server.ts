@@ -3,7 +3,7 @@ import { prisma } from '$lib/prisma';
 function getMostPopluarProduct() {
 	return prisma.product.findMany({
 		where: { isAvailableForPurchase: true },
-		take: 5,
+		take: 3,
 		orderBy: { order: { _count: 'desc' } }
 	});
 }
@@ -11,7 +11,6 @@ function getMostPopluarProduct() {
 function getNewstProduct() {
 	return prisma.product.findMany({
 		where: { isAvailableForPurchase: true },
-		take: 5,
 		orderBy: { createdAt: 'desc' }
 	});
 }

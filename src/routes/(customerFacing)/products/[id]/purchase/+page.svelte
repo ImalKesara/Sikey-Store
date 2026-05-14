@@ -26,11 +26,7 @@
 
 <div class="mx-auto grid w-full max-w-5xl space-y-8">
 	<div class="grid grid-cols-2 gap-4">
-		<img
-			src={data.product.imagePath}
-			alt="Product"
-			class="h-[450px] w-[600px] rounded-lg object-cover"
-		/>
+		<img src={data.product.imagePath} alt="Product" class="h-115.5 w-150 rounded-lg object-cover" />
 		<div class="flex flex-col gap-3">
 			<h1 class="row-span-1 text-3xl font-black">{data.product.name}</h1>
 			<p class="row-span-1">{data.product.description}</p>

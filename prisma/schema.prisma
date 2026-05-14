@@ -1,13 +1,12 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider        = "prisma-client-js"
+  output          = "../generated/prisma"
   previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
   provider = "sqlite"
 }
-
 
 model User {
   id            String    @id
@@ -79,6 +78,7 @@ model Verification {
   @@index([identifier])
   @@map("verification")
 }
+
 model Product {
   id                     String                 @id @default(uuid())
   name                   String
@@ -102,7 +102,7 @@ model Order {
   product      Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model DownloadVerification {
