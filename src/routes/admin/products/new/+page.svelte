@@ -2,24 +2,15 @@
 	import * as Form from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
 	import PageHeader from '$lib/components/PageHeader.svelte';
-	import { superForm, fileProxy } from 'sveltekit-superforms';
-	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { addFormSchema } from '$lib/formSchema.js';
 	import { Textarea } from '$lib/components/ui/textarea';
 	import { Button } from '$lib/components/ui/button';
 	import { Loader } from 'lucide-svelte';
-
 	import { formatCurrency } from '$lib/utils.js';
+
 	const { data } = $props();
-	const form = superForm(data.form, {
-		validators: zodClient(addFormSchema)
-	});
 
 	let { form: formData, delayed, enhance } = form;
-	// 								name = "file"
-	const file = fileProxy(formData, 'file');
-	// 								name = "image"
-	const image = fileProxy(formData, 'image');
 </script>
 
 <PageHeader>Add Products</PageHeader>
@@ -50,7 +41,7 @@
 		<Form.FieldErrors />
 	</Form.Field>
 
-	<div class="text-sm text-muted-foreground">
+	<div class="text-muted-foreground text-sm">
 		{`Price in ${formatCurrency($formData.priceInCents / 100)}`}
 	</div>
 

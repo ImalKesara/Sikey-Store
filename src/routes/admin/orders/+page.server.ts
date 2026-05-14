@@ -1,8 +1,8 @@
-import { db } from '../../../hooks.server';
+import { prisma } from '$lib/prisma.js';
 
 export const load = async () => {
 	return {
-		orders: await db.order.findMany({
+		orders: await prisma.order.findMany({
 			select: {
 				id: true,
 				priceInCents: true,
@@ -18,6 +18,6 @@ export const actions = {
 	deleteOrder: async ({ request }) => {
 		const formData = await request.formData();
 		const id = formData.get('id') as string;
-		await db.order.delete({ where: { id } });
+		await prisma.order.delete({ where: { id } });
 	}
 };

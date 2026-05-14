@@ -61,6 +61,5 @@ export const actions = {
 			console.error(e);
 		}
 		redirect(303, '/admin/products');
-		// goto('/admin/products');
 	}
 };
