@@ -7,7 +7,7 @@ export const actions = {
 		const { email, password } = Object.fromEntries(formData);
 		if (!email || !password) return fail(400, { message: 'Email and password are required' });
 		try {
-			const data = await auth.api.signInEmail({
+			await auth.api.signInEmail({
 				body: {
 					email: email as string,
 					password: password as string
@@ -15,7 +15,7 @@ export const actions = {
 				headers: event.request.headers
 			});
 
-			return { success: true };
+			redirect(302, '/admin');
 		} catch (e) {
 			return fail(400, { message: (e as Error).message });
 		}

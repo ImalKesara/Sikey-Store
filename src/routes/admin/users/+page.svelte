@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import * as Table from '$lib/components/ui/table';
-	import {  EllipsisVertical } from 'lucide-svelte';
+	import { EllipsisVertical } from 'lucide-svelte';
 	import { formartNumber, formatCurrency } from '$lib/utils.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 
@@ -11,7 +11,7 @@
 </script>
 
 <PageHeader>Customers</PageHeader>
-{#if data.users.length === 0}
+{#if data.filteredUsers.length === 0}
 	<h1>No Remain Customers 🙅</h1>
 {:else}
 	{@render customerTable()}
@@ -30,15 +30,15 @@
 			</Table.Row>
 		</Table.Header>
 		<Table.Body>
-			{#each data.users as user}
+			{#each data.filteredUsers as user}
 				<Table.Row>
 					<Table.Cell>
 						{user.email}
 					</Table.Cell>
-					<Table.Cell>{formartNumber(user.order.length)}</Table.Cell>
+					<Table.Cell>{formartNumber(user.orders.length)}</Table.Cell>
 					<Table.Cell
 						>{formatCurrency(
-							user.order.reduce((sum, curr) => sum + curr.priceInCents, 0)
+							user.orders.reduce((sum, curr) => sum + curr.priceInCents, 0)
 						)}</Table.Cell
 					>
 					<Table.Cell class="text-right">
@@ -50,7 +50,7 @@
 							<DropdownMenu.Content>
 								<!-- Toggle status Active/Inactive Status -->
 								<form action="?/deleteUser" use:enhance method="POST">
-									<button type="submit" class="w-full text-destructive">
+									<button type="submit" class="text-destructive w-full">
 										<DropdownMenu.Item>Delete</DropdownMenu.Item>
 									</button>
 									<input type="hidden" name="id" value={user.id} />

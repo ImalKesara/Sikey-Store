@@ -8,7 +8,7 @@ export const actions = {
 		if (!email || !password || !name)
 			return fail(400, { message: 'Email, password, and name are required' });
 		try {
-			const data = await auth.api.signUpEmail({
+			await auth.api.signUpEmail({
 				body: {
 					name: name as string,
 					email: email as string,
@@ -17,7 +17,7 @@ export const actions = {
 				headers: event.request.headers
 			});
 
-			return { success: true };
+			redirect(302, '/admin');
 		} catch (e) {
 			return fail(400, { message: (e as Error).message });
 		}

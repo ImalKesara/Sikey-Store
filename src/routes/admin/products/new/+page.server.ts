@@ -1,43 +1,26 @@
-import { addFormSchema } from '$lib/formSchema';
-import { superValidate, fail } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
 import fs from 'fs/promises';
 import { redirect } from '@sveltejs/kit';
 import { prisma } from '$lib/prisma.js';
-
-export const load = async () => {
-	return {
-		form: await superValidate(zod(addFormSchema))
-	};
-};
+import { uploadImage } from '$lib/server/image-upload.js';
 
 export const actions = {
 	default: async ({ request }) => {
-		const form = await superValidate(request, zod(addFormSchema));
-		if (!form.valid) {
-			return fail(400, { form });
-		}
+		const formData = await request.formData();
 
-		// create products-file folder
-		await fs.mkdir('productFile', { recursive: true });
-		// file path
-		const filePath = `productFile/${crypto.randomUUID()}-${form.data.name}`;
-		await fs.writeFile(filePath, Buffer.from(await form.data.file.arrayBuffer()));
+		const name = formData.get('name') as string;
+		const description = formData.get('description') as string;
+		const priceInCents = formData.get('priceInCents') as string;
+		const file = formData.get('imageupload') as File;
 
-		// create products-image folder
-		await fs.mkdir('static/productsIMG', { recursive: true });
-		// image path
-		const imagePath = `/productsIMG/${crypto.randomUUID()}-${form.data.image.name}`;
-		await fs.writeFile(`static${imagePath}`, Buffer.from(await form.data.image.arrayBuffer()));
+		const uploadedImg = await uploadImage(file);
 
 		try {
 			await prisma.product.create({
 				data: {
-					name: form.data.name,
-					description: form.data.description,
-					priceInCents: form.data.priceInCents,
-					filePath,
-					imagePath,
+					name: name,
+					description: description,
+					priceInCents: Number(priceInCents),
+					imagePath: uploadedImg.secure_url,
 					isAvailableForPurchase: false
 				}
 			});

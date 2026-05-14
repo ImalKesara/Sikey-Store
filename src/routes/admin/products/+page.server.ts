@@ -1,5 +1,4 @@
 import { prisma } from '$lib/prisma.js';
-import fs from 'fs/promises';
 
 export const load = async () => {
 	return {
@@ -47,8 +46,6 @@ export const actions = {
 			where: { id }
 		});
 
-		// `static${imagePath}`
-		await fs.unlink(deletedProduct.filePath);
-		await fs.unlink(`static${deletedProduct.imagePath}`);
+		// add method to delete image from cloudinary too
 	}
 };

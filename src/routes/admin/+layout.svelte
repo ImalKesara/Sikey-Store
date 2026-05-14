@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import { cn } from '$lib/utils';
-	import  {Toaster} from 'svelte-5-french-toast'
+	import { Toaster } from 'svelte-5-french-toast';
 	let pathname = $derived($page.url.pathname);
 	let { children } = $props();
 </script>
@@ -17,7 +17,7 @@
 	<!-- logout button -->
 </Navbar>
 
-<div class="container my-6">
+<div class="container mx-auto mt-10 max-w-5xl">
 	{@render children()}
 </div>
 

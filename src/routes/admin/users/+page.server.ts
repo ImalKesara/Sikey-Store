@@ -1,17 +1,20 @@
 import { prisma } from '$lib/prisma.js';
 
 export const load = async () => {
-	return {
-		users: await prisma.user.findMany({
-			select: {
-				id: true,
-				email: true,
-				// means order table eke tiyena priceInCents
-				order: { select: { priceInCents: true } }
-			},
-			orderBy: { createdAt: 'desc' }
-		})
-	};
+	const users = await prisma.user.findMany({
+		select: {
+			id: true,
+			email: true,
+			role: true,
+			// means order table eke tiyena priceInCents
+			orders: { select: { priceInCents: true } }
+		},
+		orderBy: { createdAt: 'desc' }
+	});
+
+	const filteredUsers = users.filter((role) => role.role === 'user');
+
+	return { filteredUsers };
 };
 
 export const actions = {

@@ -1,104 +1,89 @@
 <script lang="ts">
-	import * as Form from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
 	import PageHeader from '$lib/components/PageHeader.svelte';
-	import { addFormSchema } from '$lib/formSchema.js';
 	import { Textarea } from '$lib/components/ui/textarea';
 	import { Button } from '$lib/components/ui/button';
 	import { Loader } from 'lucide-svelte';
 	import { formatCurrency } from '$lib/utils.js';
+	import { enhance } from '$app/forms';
+	import {
+		FieldGroup,
+		Field,
+		FieldLabel,
+		FieldDescription
+	} from '$lib/components/ui/field/index.js';
 
 	const { data } = $props();
-
-	let { form: formData, delayed, enhance } = form;
+	let uploading = $state(false);
+	let price: number = $state(0);
 </script>
 
 <PageHeader>Add Products</PageHeader>
 <!-- The enctype attribute specifies how the form-data should be encoded when submitting it to the server. -->
 <!-- multipart/form-data	 This value is necessary if the user will upload a file through the form -->
-<form
-	class="space-y-4"
-	action="/admin/products/new"
-	method="POST"
-	use:enhance
-	enctype="multipart/form-data"
->
-	<!-- product name (name="name" means check out formSchema.ts file)-->
-	<Form.Field {form} name="name">
-		<Form.Control let:attrs>
-			<Form.Label>Product name</Form.Label>
-			<Input {...attrs} bind:value={$formData.name} />
-		</Form.Control>
-		<Form.FieldErrors />
-	</Form.Field>
+<div class="mx-auto max-w-xl">
+	<form
+		class="space-y-4"
+		action="/admin/products/new"
+		method="POST"
+		use:enhance={() => {
+			uploading = true;
+			return async ({ update }) => {
+				await update();
+				uploading = false;
+			};
+		}}
+		enctype="multipart/form-data"
+	>
+		<FieldGroup>
+			<Field>
+				<FieldLabel for="name">Name</FieldLabel>
+				<Input id="name" name="name" type="text" placeholder="Product Name" required />
+			</Field>
+			<Field>
+				<FieldLabel for="priceInCents">Price</FieldLabel>
+				<Input
+					id="priceInCents"
+					name="priceInCents"
+					type="number"
+					placeholder="Price in Cents"
+					required
+					bind:value={price}
+				/>
+			</Field>
 
-	<!-- price in cents -->
-	<Form.Field {form} name="priceInCents">
-		<Form.Control let:attrs>
-			<Form.Label>Price in Cents</Form.Label>
-			<Input type="number" {...attrs} bind:value={$formData.priceInCents} />
-		</Form.Control>
-		<Form.FieldErrors />
-	</Form.Field>
+			<div class="text-muted-foreground text-sm">
+				{`Price in ${formatCurrency(price / 100)}`}
+			</div>
 
-	<div class="text-muted-foreground text-sm">
-		{`Price in ${formatCurrency($formData.priceInCents / 100)}`}
-	</div>
+			<Field>
+				<FieldLabel for="description">Description</FieldLabel>
+				<Textarea id="description" name="description" placeholder="Product Description" required />
+			</Field>
 
-	<!-- Product Description -->
-	<Form.Field {form} name="description">
-		<Form.Control let:attrs>
-			<Form.Label>Product Description</Form.Label>
-			<Textarea {...attrs} bind:value={$formData.description} />
-		</Form.Control>
-		<Form.FieldErrors />
-	</Form.Field>
+			<Field>
+				<FieldLabel for="productImage">Product Image</FieldLabel>
+				<Input
+					name="imageupload"
+					accept="image/*"
+					type="file"
+					class="block w-full text-sm text-slate-500
+					file:mr-4 file:rounded-full file:border-0
+					file:bg-violet-50 file:px-4
+					file:py-2 file:text-sm
+					file:font-semibold file:text-black
+					hover:file:bg-violet-100"
+				/>
+			</Field>
+		</FieldGroup>
 
-	<!-- File -->
-	<Form.Field {form} name="file">
-		<Form.Control let:attrs>
-			<Form.Label>Product File</Form.Label>
-			<input
-				{...attrs}
-				type="file"
-				bind:files={$file}
-				class="block w-full text-sm text-slate-500
-			file:mr-4 file:rounded-full file:border-0
-			file:bg-violet-50 file:px-4
-			file:py-2 file:text-sm
-			file:font-semibold file:text-black
-			hover:file:bg-violet-100"
-			/>
-		</Form.Control>
-		<Form.FieldErrors />
-	</Form.Field>
-
-	<!-- Image -->
-	<Form.Field {form} name="image">
-		<Form.Control let:attrs>
-			<Form.Label>Product Image</Form.Label>
-			<!-- accept any image type -->
-			<input
-				{...attrs}
-				accept="image/*"
-				type="file"
-				bind:files={$image}
-				class="block w-full text-sm text-slate-500
-			file:mr-4 file:rounded-full file:border-0
-			file:bg-violet-50 file:px-4
-			file:py-2 file:text-sm
-			file:font-semibold file:text-black
-			hover:file:bg-violet-100"
-			/>
-		</Form.Control>
-		<Form.FieldErrors />
-	</Form.Field>
-
-	<Button type="submit" class="w-full">
-		{#if $delayed}
-			<Loader class="size-4 animate-spin" />
+		{#if uploading}
+			<Button type="submit" class="w-full">
+				<Loader class="mr-2 h-4 w-4 animate-spin" />
+				Adding Product...
+			</Button>
 		{:else}
-			Add Product
+			<Button type="submit" class="w-full">Add Product</Button>
 		{/if}
-	</Button>
-</form>
+	</form>
+</div>
