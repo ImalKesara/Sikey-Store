@@ -4,9 +4,9 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
+		"postinstall": "prisma generate",
 		"dev": "vite dev",
 		"build": "vite build",
-		"postinstall": "prisma generate",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",

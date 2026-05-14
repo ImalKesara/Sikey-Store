@@ -1,3 +1,4 @@
+import { prisma } from '$lib/prisma';
 import fs from 'fs/promises';
 
 export const GET = async ({ params: { slug } }) => {
